@@ -58,85 +58,106 @@
 					<div class="container">
 						<article id="main" class="special">
 							<h2 id="hernquist-group-cluster-resources">Hernquist Group Cluster Resources</h2>
-<p>The cluster used in the Hernquist group is called Cannon. It is managed by FAS Research Computing (RC).</p>
-<p>First it is a good idea to familiarize yourself with documentation provided by RC.</p>
-<ul>
-<li><a href="https://docs.rc.fas.harvard.edu/kb/quickstart-guide/">Quickstart Guide</a>. Contains information about requesting an account, logging into the cluster, file transfer, and submitting simple jobs.</li>
-<li><a href="https://docs.rc.fas.harvard.edu/kb/running-jobs/">Running Jobs</a>. Contains more detailed information about running jobs, e.g., running batch jobs. Also contains a section on the different partitions available. The partitions in this link are available to all cluster users. Members of the hernquist group have access to more partitions, outlined below.</li>
-<li><a href="https://docs.rc.fas.harvard.edu/kb/cluster-storage/">Cluster Storage</a>. </li>
-<li><a href="https://docs.rc.fas.harvard.edu/kb/transferring-data-on-the-cluster/">Transferring Files</a>. More information on transferring files on the cluster and between the cluster and your local machine, including <code>rsync</code> and <code>fpsync</code>.</li>
-<li><a href="https://docs.rc.fas.harvard.edu/kb/vdi-apps/">VDI Apps</a>. If you&#39;d like, e.g., a jupyter notebook on the cluster, you can do this very conveniently in a web browser. Other applications are also available.</li>
-<li><a href="https://docs.rc.fas.harvard.edu/kb/common-pitfalls/?seq_no=2">Common Cluster Pitfalls</a>.</li>
-</ul>
-<h2 id="group-partitions">Group Partitions</h2>
-<p>In addition to the partitions available in the <a href="https://docs.rc.fas.harvard.edu/kb/running-jobs/">Running Jobs</a> document, we have access to the following partitions.</p>
-<table>
-<thead>
-<tr>
-<th>Partition</th>
-<th>Nodes</th>
-<th>Cores per node</th>
-<th>CPU Core Types</th>
-<th>Mem per Node (GB)</th>
-<th>Time Limit</th>
-<th>Max Jobs</th>
-<th>Max Cores</th>
-<th>MPI Suitable?</th>
-<th>GPU Capable?</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>hernquist</td>
-<td>10</td>
-<td>48</td>
-<td>Intel &quot;Cascade Lake&quot;</td>
-<td>184</td>
-<td>7 days</td>
-<td>none</td>
-<td>none</td>
-<td>Yes</td>
-<td>No</td>
-</tr>
-<tr>
-<td>hernquist_ice</td>
-<td>12</td>
-<td>64</td>
-<td>Intel &quot;Ice Lake&quot;</td>
-<td>499</td>
-<td>7 days</td>
-<td>none</td>
-<td>none</td>
-<td>Yes</td>
-<td>No</td>
-</tr>
-<tr>
-<td>itc_cluster</td>
-<td>24</td>
-<td>48</td>
-<td>Intel &quot;Cascade Lake&quot;</td>
-<td>184</td>
-<td>7 days</td>
-<td>none</td>
-<td>none</td>
-<td>Yes</td>
-<td>No</td>
-</tr>
-</tbody>
-</table>
-<h2 id="group-storage">Group Storage</h2>
-<p>There is a wide variety of storage options available. They are (replace <code>abeane</code> with your username):</p>
-<ul>
-<li><code>home</code>: <code>/n/homeN/abeane</code>. <code>N</code> is a number from <code>01</code> to <code>15</code>. Note that <code>~</code> is a shortcut for your home directory, and you can find the exact path to your home directory with <code>pwd</code>. Home directories have a hard limit of <code>100 GB</code>. Home directories <em>are backed up</em>. They are suitable for placing scripts used to generate data, installing software, etc.</li>
-<li><code>scratch</code>: <code>/n/holyscratch01/hernquist_lab/abeane</code>. Scratch storage is the highest performance storage available, but it is not backed up and <strong>files older than 90 days are deleted</strong>. The lab has a quota of <code>50 TB</code>.</li>
-<li><code>holystore01</code>: <code>/n/holystore01/LABS/hernquist_lab/Users/abeane</code>. <code>holystore01</code> is a larger file storage system. This system is suitable for long-term storage of large data products. It has a total capacity of <code>600 TB</code>, but at the time of writing <code>587 TB</code> is used. The total capacity of this storage is fixed and cannot be increased. Data is not backed up.</li>
-<li><code>holylfs05</code>: <code>/n/holylfs05/LABS/hernquist_lab/Users/abeane</code>. <code>holylfs05</code> is mostly identical to <code>holystore01</code>. It has a total capacity of <code>300 TB</code>, of which <code>222 TB</code> is used at the time of writing. Unlike <code>holystore01</code>, our storage limit on <code>holylfs05</code> can be increased in the future if needed. Data is not backed up.</li>
-</ul>
-<p>More information can be found in the <a href="https://docs.rc.fas.harvard.edu/kb/cluster-storage/">Cluster Storage</a> page.</p>
-<p>For <code>holystore01</code> and <code>holylfs05</code>, if you do not have a directory in the <code>Users</code> directory, email RC (<a href="mailto:rchelp@fas.rc.edu)">rchelp@fas.rc.edu </a>) to have them create one for you. There is also a <code>Lab</code> and <code>Everyone</code> directory in this storage. The idea is that files in <code>Users</code> are only accessible to you, in <code>Lab</code> accessible to people in the group, and <code>Everyone</code> to everyone on the cluster. I find this annoying and I just make my <code>Users</code> directory group accessible.</p>
-<p>There also exists on each node a local scratch directory of size <code>200-300 GB</code>. It is located at <code>/scratch</code>. It is the highest performance storage available, but data on it does not persist beyond the job. This can be used for extremely high I/O intensive jobs, but data generated must be moved somewhere else during the job. It is also good practice to delete any files you create in scratch before your job completes.</p>
-<p>Tape storage is in principle available from RC. This is suitable for data that needs to be kept but does not need to be used in the near future. Our group has not used tape storage yet. If you have a large amount of data (<code>&gt;10 TB</code>) that would be a good candidate for tape storage, please reach out.</p>
-<p>Your personal usage on each storage system can be checked with standard <code>df</code> commands. To check group usage on <code>holystore01</code> and <code>holylfs05</code>, you can use the command <code>lfs quota -hg hernquist_lab /n/holylfs05</code>. </p>
+								<p>The cluster used in the Hernquist group is called Cannon. It is managed by FAS Research Computing (RC).
+								</p>
+
+								<p>First it is a good idea to familiarize yourself with documentation provided by RC.
+								</p>
+
+								<ul>
+									<li><a href="https://docs.rc.fas.harvard.edu/kb/quickstart-guide/">Quickstart Guide</a>. Contains information about requesting an account, logging into the cluster, file transfer, and submitting simple jobs.</li>
+									<li><a href="https://docs.rc.fas.harvard.edu/kb/running-jobs/">Running Jobs</a>. Contains more detailed information about running jobs, e.g., running batch jobs. Also contains a section on the different partitions available. The partitions in this link are available to all cluster users. Members of the hernquist group have access to more partitions, outlined below.</li>
+									<li><a href="https://docs.rc.fas.harvard.edu/kb/cluster-storage/">Cluster Storage</a>. </li>
+									<li><a href="https://docs.rc.fas.harvard.edu/kb/transferring-data-on-the-cluster/">Transferring Files</a>. More information on transferring files on the cluster and between the cluster and your local machine, including <code>rsync</code> and <code>fpsync</code>.</li>
+									<li><a href="https://docs.rc.fas.harvard.edu/kb/vdi-apps/">VDI Apps</a>. If you&#39;d like, e.g., a jupyter notebook on the cluster, you can do this very conveniently in a web browser. Other applications are also available.</li>
+									<li><a href="https://docs.rc.fas.harvard.edu/kb/common-pitfalls/?seq_no=2">Common Cluster Pitfalls</a>.</li>
+								</ul>
+
+
+							<h2 id="group-partitions">Group Partitions</h2>
+								<p>In addition to the partitions available in the <a href="https://docs.rc.fas.harvard.edu/kb/running-jobs/">Running Jobs</a> document, we have access to the following partitions.</p>
+
+								<table>
+								<thead>
+								<tr>
+								<th>Partition</th>
+								<th>Nodes</th>
+								<th>Cores per node</th>
+								<th>CPU Core Types</th>
+								<th>Mem per Node (GB)</th>
+								<th>Time Limit</th>
+								<th>Max Jobs</th>
+								<th>Max Cores</th>
+								<th>MPI Suitable?</th>
+								<th>GPU Capable?</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+								<td>hernquist</td>
+								<td>10</td>
+								<td>48</td>
+								<td>Intel &quot;Cascade Lake&quot;</td>
+								<td>184</td>
+								<td>7 days</td>
+								<td>none</td>
+								<td>none</td>
+								<td>Yes</td>
+								<td>No</td>
+								</tr>
+								<tr>
+								<td>hernquist_ice</td>
+								<td>12</td>
+								<td>64</td>
+								<td>Intel &quot;Ice Lake&quot;</td>
+								<td>499</td>
+								<td>7 days</td>
+								<td>none</td>
+								<td>none</td>
+								<td>Yes</td>
+								<td>No</td>
+								</tr>
+								<tr>
+								<td>itc_cluster</td>
+								<td>24</td>
+								<td>48</td>
+								<td>Intel &quot;Cascade Lake&quot;</td>
+								<td>184</td>
+								<td>7 days</td>
+								<td>none</td>
+								<td>none</td>
+								<td>Yes</td>
+								<td>No</td>
+								</tr>
+								</tbody>
+								</table>
+
+
+
+							<h2 id="group-storage">Group Storage</h2>
+								<p>There is a wide variety of storage options available. They are (replace <code>abeane</code> with your username):
+								</p>
+								<ul>
+									<li><code>home</code>: <code>/n/homeN/abeane</code>. <code>N</code> is a number from <code>01</code> to <code>15</code>. Note that <code>~</code> is a shortcut for your home directory, and you can find the exact path to your home directory with <code>pwd</code>. Home directories have a hard limit of <code>100 GB</code>. Home directories <em>are backed up</em>. They are suitable for placing scripts used to generate data, installing software, etc.</li>
+									<li><code>scratch</code>: <code>/n/holyscratch01/hernquist_lab/abeane</code>. Scratch storage is the highest performance storage available, but it is not backed up and <strong>files older than 90 days are deleted</strong>. The lab has a quota of <code>50 TB</code>.</li>
+									<li><code>holystore01</code>: <code>/n/holystore01/LABS/hernquist_lab/Users/abeane</code>. <code>holystore01</code> is a larger file storage system. This system is suitable for long-term storage of large data products. It has a total capacity of <code>600 TB</code>, but at the time of writing <code>587 TB</code> is used. The total capacity of this storage is fixed and cannot be increased. Data is not backed up.</li>
+									<li><code>holylfs05</code>: <code>/n/holylfs05/LABS/hernquist_lab/Users/abeane</code>. <code>holylfs05</code> is mostly identical to <code>holystore01</code>. It has a total capacity of <code>300 TB</code>, of which <code>222 TB</code> is used at the time of writing. Unlike <code>holystore01</code>, our storage limit on <code>holylfs05</code> can be increased in the future if needed. Data is not backed up.</li>
+								</ul>
+
+								<p>More information can be found in the <a href="https://docs.rc.fas.harvard.edu/kb/cluster-storage/">Cluster Storage</a> page.
+								</p>
+
+								<p>For <code>holystore01</code> and <code>holylfs05</code>, if you do not have a directory in the <code>Users</code> directory, email RC (<a href="mailto:rchelp@fas.rc.edu)">rchelp@fas.rc.edu </a>) to have them create one for you. There is also a <code>Lab</code> and <code>Everyone</code> directory in this storage. The idea is that files in <code>Users</code> are only accessible to you, in <code>Lab</code> accessible to people in the group, and <code>Everyone</code> to everyone on the cluster. I find this annoying and I just make my <code>Users</code> directory group accessible.
+								</p>
+
+								<p>There also exists on each node a local scratch directory of size <code>200-300 GB</code>. It is located at <code>/scratch</code>. It is the highest performance storage available, but data on it does not persist beyond the job. This can be used for extremely high I/O intensive jobs, but data generated must be moved somewhere else during the job. It is also good practice to delete any files you create in scratch before your job completes.
+								</p>
+
+								<p>Tape storage is in principle available from RC. This is suitable for data that needs to be kept but does not need to be used in the near future. Our group has not used tape storage yet. If you have a large amount of data (<code>&gt;10 TB</code>) that would be a good candidate for tape storage, please <a href="mailto:angus.beane@cfa.harvard.edu">reach out</a>.
+								</p>
+
+								<p>Your personal usage on each storage system can be checked with standard <code>df</code> commands. To check group usage on <code>holystore01</code> and <code>holylfs05</code>, you can use the command <code>lfs quota -hg hernquist_lab /n/holylfs05</code>. 
+								</p>
 
 
 						</article>
